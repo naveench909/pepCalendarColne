@@ -17,22 +17,15 @@ app.use(express.urlencoded());
 //Router
 app.use(require('./router/router'));
 
-app.use(express.static(path.join(__dirname, '../build')));
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../build'))
-})
-
-// app.use("/api/calendar" , require("./Controllers/calendarController"));
 
 
-// if(process.env.NODE_ENV === "production"){
-//     app.use(express.static("frontend/build"))
-// }
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static("frontend/build"));
 
-// app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "frontend", "build", "index.html"));
-// });
-
+    app.get("*", (req,res) =>{
+        res.sendFile(path.resolve(__dirname , 'frontend' , 'build' , 'index.html'))
+    })
+} 
 
 
 app.listen(port , ()=>{console.log(`server started at ${port}`)});
